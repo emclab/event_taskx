@@ -1,0 +1,39 @@
+<div class="pagination"><%= will_paginate models %></div>
+    <table class="table table-striped">
+		<tr>
+			<th><%= t('Task Name') %></th>
+			<th><%= t('Description') %></th>
+			<th><%= t('Instruction') %></th>
+			<th><%= t('Expedite') %></th>
+			<th><%= t('Cancelled') %></th>
+			<th><%= t('Completed') %></th>
+			<th><%= t('Executioner') %></th>
+			<th><%= t('Requestd By') %></th>
+			<th><%= t('Last Updated By') %></th>
+			<th></th>
+		</tr>
+		<% models.each do |r| %>
+		  <tr>
+		  	<td><%= r.name %></td>
+			<td><%= prt(r, :description) %></td>
+			<td><%= prt(r, :instruction) %></td>
+			<td><%= t(prt(r, :expedite).to_s) %></td>
+			<td><%= t(prt(r, :cancelled).to_s) %></td>
+			<td><%= t(prt(r, :completed).to_s) %></td>
+			<td><%= prt(r, 'executioner.name') if r.executioner_id.present? %></td> 
+			<td><%= prt(r, 'requested_by.name') %></td> 
+			<td><%= prt(r, 'last_updated_by.name') %></td>    
+			<td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{edit_event_task_path(r, :parent_record_id => r.resource_id, :parent_resource => r.resource_string)}", :class => BUTTONS_CLS['action']  if has_action_right?('update', 'event_taskx_event_tasks', r) %></td>
+		  </tr>
+		<% end %>
+	</table>
+	
+	<table class="table table-striped">
+	  <tr>
+	    <th>
+	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    	<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action']  %>
+	    </th>
+	  </tr>
+	</table>
+	

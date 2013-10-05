@@ -1,0 +1,36 @@
+<%= simple_form_for @event_task do |f| %>    
+	  <%= f.input :name, :label => t('Task Name') %>  
+	  <%= f.input :description, :label => t('Description'), :input_html => {:rows => 4} %>
+	  <%= f.input :instruction, :label => t('Instruction'), :input_html => {:rows => 4} %>	  
+	  <% if readonly?(@event_task, 'task_status_id')%>
+	    <%= f.input :task_status_noupdate, :label => t('Task Status'), :input_html => {:value => @event_task.task_status.name} if @event_task.task_status_id.present? %>
+	    <%= f.input :task_status_noupdate, :label => t('Task Status') if @event_task.task_status_id.blank? %>
+	  <% else %>
+	    <%= f.input :task_status_id, :label => t('Task Status'), :collection => Commonx::MiscDefinition.where(:for_which => 'task_status'), :include_blank => true %>
+	  <% end %>
+	  <% if readonly?(@event_task, 'executioner_id')%>
+	    <%= f.input :executioner_noupdate, :label => t('Executioner'), :input_html => {:value => @event_task.executioner.name} if @event_task.executioner_id.present? %>
+	    <%= f.input :executioner_noupdate, :label => t('Executioner') if @event_task.executioner_id.blank? %>
+	  <% else %>
+	    <%= f.input :executioner_id, :label => t('Executioner'), :collection => Authentify::User.where(:status => 'active'), :include_blank => true %>
+	  <% end %>
+	  <%= f.input :task_category, :as => :hidden, :input_html => {:value => @event_task.task_category} if @event_task.task_category.present? %>	  
+	  <% if readonly?(@event_task, 'cancelled')%>
+        <%= f.input :cancelled_noupdate, :label => t('Cancelled'), :readonly => true, :required => false, :input_html => {:value => @event_task.cancelled} %>
+      <% else %>
+        <%= f.input :cancelled, :label => t('Cancelled'), :collection => [[t('Yes'), true], [t('No'), false]]%>
+      <% end %>
+      <% if readonly?(@event_task, 'expedite')%>
+        <%= f.input :expedite_noupdate, :label => t('Expedite'), :readonly => true, :required => false, :input_html => {:value => @event_task.expedite} %>
+      <% else %>
+        <%= f.input :cancelled, :label => t('Expedite'), :collection => [[t('Yes'), true], [t('No'), false]]%>
+      <% end %>
+      <% if readonly?(@event_task, 'completed')%>
+        <%= f.input :completed_noupdate, :label => t('Completed'), :readonly => true, :required => false, :input_html => {:value => @event_task.completed} %>
+      <% else %>
+        <%= f.input :cancelled, :label => t('Completed'), :collection => [[t('Yes'), true], [t('No'), false]]%>
+      <% end %>
+      <%= f.input :requested_by_noupdate, :label => t('Requested_by'), :readonly => true, :required => false, :input_html => {:value => @event_task.requested_by.name} %>
+	  
+	  <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>  
+<% end %>  

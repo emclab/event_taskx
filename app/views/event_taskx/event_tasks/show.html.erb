@@ -1,0 +1,61 @@
+<div id="main_body">
+<h4><%=t('Task Info') %></h4>
+
+<p>
+  <b><%= t('Name') %></b>
+  <%= @event_task.name %>
+</p>
+<p>
+  <b><%= t('Description') %></b>
+  <%= @event_task.description %>
+</p>
+<p>
+  <b><%= t('Instruction') %></b>
+  <%= @event_task.instruction %>
+</p>
+<% if @event_task.task_category.present? %>
+  <p>
+    <b><%= t('Task Category')  %></b>
+    <%= @event_task.task_category %>
+  </p>
+<% end %>
+<p>
+  <b><%= t('Task Status') %></b>
+  <%= @event_task.task_status.name %>
+</p>
+<p>
+  <b><%= t('Expedite') %></b>
+  <%= @event_task.expedite ? t('Yes') : t('No') %>
+</p>
+<p>
+  <b><%= t('Cancelled') %></b>
+  <%= @event_task.cancelled ? t('Yes') : t('No') %>
+</p>
+<p>
+  <b><%= t('Completed') %></b>
+  <%= @event_task.completed ? t('Yes') : t('No') %>
+</p>
+<p>
+  <b><%= t('Executioner') %></b>
+  <%= @event_task.executioner.name %>
+</p>
+<p>
+  <b><%= t('Requested By') %></b>
+  <%= @event_task.requested_by.name %>
+</p>
+<p>
+  <b><%= t('Last Updated By') %></b>
+  <%= @event_task.last_updated_by.name %>
+</p>
+<p>
+  <b>LOG：</b>
+  <% Commonx::Log.where('resource_id = ? AND resource_name = ?', @event_task.id, params[:controller].sub('/', '_')).order("created_at DESC").each do |t| %>
+    <li><%= t.created_at.strftime("%Y/%m/%d") %>,&nbsp; <%= t.last_updated_by.name %>,&nbsp; <%= t.log %> </li>
+  <% end %>
+</p>
+
+  <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :id => 'close', :class => BUTTONS_CLS['action'] %>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<%= link_to t('New Log'), SUBURI + commonx.new_log_path(:resource_id => @event_task.id, :resource_name => params[:controller], :subaction => 'event_task', :format => :js), :remote => true, 
+                          :id => 'new_log_link', :class => BUTTONS_CLS['action'] if has_action_right?('create_event_task', 'commonx/logs') %>    	
+</div>

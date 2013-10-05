@@ -1,0 +1,39 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+  
+zh-CN:
+  
+  #event_taskx
+  Event Tasks  : '任务一览'
+  New Event Task  : '新任务'
+  New Task : '新任务'
+  Update Event Task : '更新任务'
+  Edit Task Info: '更新任务'
+  Show Event Task : '任务内容'
+  Task Info : '任务内容'
+  Successfully Saved! : '已保存！'
+  Successfully Updated! : '已更新！'
+  Data Error. Not Saved! : '数据错误。 无法保存！'
+  Data Error. Not Updated! : '数据错误。无法更新！'
+  'Note:' : '注释：'
+  Note : '注释'
+  Last Updated By         : '更改'  
+  'Yes' : '是'
+  'No'  : '否'
+  'yes' : '是'
+  'no'  : '否'
+  Duplicate Name!  : '名字重复！'
+  'Duplicate Name!'  : '名字重复！'
+  Cancel  : '取消'
+  Cancelled : '已取消'
+  Completed : '已完成' 
+  Requested By  : '申请'
+  Last Updated By : '更改'   
+  Start Datetime  : '开始时间'
+  Finish Datetime : '完成时间'
+  Executioner : '执行人'
+  Expedite : '加急'
+  Delete  : '删除'
+  
+  Save : '保存'
+  'Save' : '保存'

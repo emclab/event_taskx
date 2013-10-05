@@ -1,0 +1,12 @@
+<%= simple_form_for @event_task do |f| %>    
+	  <%= f.input :name, :label => t('Task Name') %>  
+	  <%= f.input :description, :label => t('Description'), :input_html => {:rows => 4} %>
+	  <%= f.input :instruction, :label => t('Instructions'), :input_html => {:rows => 4} %>
+	  <%= f.input :task_status_id, :label => t('Task Status'), :collection => Commonx::MiscDefinition.where(:for_which => 'task_status'), :include_blank => true %>
+	  <%= f.input :executioner_id, :label => t('Executioner'), :collection => Authentify::User.where(:status => 'active'), :include_blank => true %>
+	  <%= f.input :expedite, :label => t('Expedite'), :as => :boolean %>
+	  <%= f.input :task_category, :as => :hidden, :input_html => {:value => @task_category} if @task_category.present? %>
+	  
+	  <%= f.button :submit, t('Save'), :class =>'btn btn-primary' %>  
+<% end %>  
+
