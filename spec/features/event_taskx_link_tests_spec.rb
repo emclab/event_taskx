@@ -61,7 +61,7 @@ describe "LinkTests" do
       click_link('Edit')
       #save_and_open_page
       visit new_event_task_path(:resource_id => 100, :resource_string => 'projectx/projects')
-      #save_and_open_page
+      save_and_open_page
       task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :task_category => 'production', 
                                  :resource_string => 'projectx/projects', :executioner_id => @u.id)
       visit event_task_path(task1) #, :parent_record_id => task1.resource_id, :parent_resource => task1.resource_string)

@@ -4,6 +4,8 @@
 			<th><%= t('Task Name') %></th>
 			<th><%= t('Description') %></th>
 			<th><%= t('Instruction') %></th>
+			<th><%= t('Start Date') %></th>
+			<th><%= t('Finish Date') %></th>
 			<th><%= t('Expedite') %></th>
 			<th><%= t('Cancelled') %></th>
 			<th><%= t('Completed') %></th>
@@ -17,6 +19,8 @@
 		  	<td><%= r.name %></td>
 			<td><%= prt(r, :description) %></td>
 			<td><%= prt(r, :instruction) %></td>
+			<td><%= r.start_datetime.strftime("%Y/%m/%d") %></td>
+			<td><%= r.finish_datetime.strftime("%Y/%m/%d") %></td>
 			<td><%= t(prt(r, :expedite).to_s) %></td>
 			<td><%= t(prt(r, :cancelled).to_s) %></td>
 			<td><%= t(prt(r, :completed).to_s) %></td>
