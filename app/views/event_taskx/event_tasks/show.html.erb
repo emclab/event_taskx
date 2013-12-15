@@ -1,3 +1,7 @@
+<% if @view_in_config && @erb_code %>
+  <%= render inline: ERB.new(@erb_code).result(binding) %>
+  
+  <% else %>
 <div id="main_body">
 <h4><%=t('Task Info') %></h4>
 
@@ -21,7 +25,15 @@
 <% end %>
 <p>
   <b><%= t('Task Status') %></b>
-  <%= @event_task.task_status.name %>
+  <%= @event_task.task_status.name if @event_task.task_status_id.present? %>
+</p>
+<p>
+  <b><%= t('Start Date') %></b>
+  <%= @event_task.start_datetime.strftime('%Y/%m/%d') if @event_task.start_datetime.present? %>
+</p>
+<p>
+  <b><%= t('Finish Date') %></b>
+  <%= @event_task.finish_datetime.strftime('%Y/%m/%d') if @event_task.finish_datetime.present? %>
 </p>
 <p>
   <b><%= t('Expedite') %></b>
@@ -59,3 +71,5 @@
 		<%= link_to t('New Log'), SUBURI + commonx.new_log_path(:resource_id => @event_task.id, :resource_name => params[:controller], :subaction => 'event_task', :format => :js), :remote => true, 
                           :id => 'new_log_link', :class => BUTTONS_CLS['action'] if has_action_right?('create_event_task', 'commonx/logs') %>    	
 </div>
+
+<% end %>

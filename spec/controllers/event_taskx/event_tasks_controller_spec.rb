@@ -31,7 +31,7 @@ module EventTaskx
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id)
         task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :name => 'a new task')
-        get 'index', {:use_route => :event_taskx_event_task}
+        get 'index', {:use_route => :event_taskx}
         assigns[:event_tasks].should =~ [task, task1]
       end
       
@@ -42,7 +42,7 @@ module EventTaskx
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_string => 'projectx/projects')
         task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :name => 'a new task')
-        get 'index', {:use_route => :event_taskx_event_task, :resource_string => 'projectx/projects'}
+        get 'index', {:use_route => :event_taskx, :resource_string => 'projectx/projects'}
         assigns[:event_tasks].should =~ [task]
       end
       
@@ -53,7 +53,7 @@ module EventTaskx
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100)
         task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :name => 'a new task')
-        get 'index', {:use_route => :event_taskx_event_task, :resource_id => 100}
+        get 'index', {:use_route => :event_taskx, :resource_id => 100}
         assigns[:event_tasks].should =~ [task]
       end
       
@@ -64,7 +64,7 @@ module EventTaskx
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100)
         task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :resource_string => 'projectx/projects',  :name => 'a new task')
-        get 'index', {:use_route => :event_taskx_event_task, :resource_id => 100, :resource_string => ' projectx/projects'}
+        get 'index', {:use_route => :event_taskx, :resource_id => 100, :resource_string => ' projectx/projects'}
         assigns[:event_tasks].should =~ [task1]
       end
       
@@ -75,7 +75,7 @@ module EventTaskx
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :task_category => 'production')
         task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :resource_string => 'projectx/projects',  :name => 'a new task')
-        get 'index', {:use_route => :event_taskx_event_task, :task_category => 'production'}
+        get 'index', {:use_route => :event_taskx, :task_category => 'production'}
         assigns[:event_tasks].should =~ [task]
       end
       
@@ -88,7 +88,7 @@ module EventTaskx
         :sql_code => "")
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
-        get 'new', {:use_route => :event_taskx_event_task, :task_category => 'production'}
+        get 'new', {:use_route => :event_taskx, :task_category => 'production', :resource_id => 100, :resource_string => 'event_taskx/event_tasks'}
         response.should be_success
         assigns[:task_category].should eq('production')
       end
@@ -98,7 +98,7 @@ module EventTaskx
         :sql_code => "")
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
-        get 'new', {:use_route => :event_taskx_event_task}
+        get 'new', {:use_route => :event_taskx, :resource_id => 100, :resource_string => 'event_taskx/event_tasks'}
         response.should be_success
          
       end
@@ -110,8 +110,8 @@ module EventTaskx
         :sql_code => "")
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
-        task = FactoryGirl.attributes_for(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :resource_string => 'projectx/projects')
-        get 'create', {:use_route => :event_taskx_event_task, :event_task => task}
+        task = FactoryGirl.attributes_for(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :resource_string => 'event_taskx/event_tasks' )  
+        get 'create', {:use_route => :event_taskx, :event_task => task, :resource_id => 100, :resource_string => 'event_taskx/event_tasks'}
         response.should redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
       end
       
@@ -120,8 +120,8 @@ module EventTaskx
         :sql_code => "")
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
-        task = FactoryGirl.attributes_for(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => nil, :resource_string => 'projectx/projects')
-        get 'create', {:use_route => :event_taskx_event_task, :event_task => task}
+        task = FactoryGirl.attributes_for(:event_taskx_event_task, :task_status_id => @task_sta.id, :name => nil, :resource_id => 100, :resource_string => 'event_taskx/event_tasks')
+        get 'create', {:use_route => :event_taskx, :event_task => task, :resource_id => 100, :resource_string => 'event_taskx/event_tasks'}
         response.should render_template('new')
       end
     end
@@ -133,7 +133,7 @@ module EventTaskx
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :task_category => 'production')
-        get 'edit', {:use_route => :event_taskx_event_task, :id => task.id}
+        get 'edit', {:use_route => :event_taskx, :id => task.id}
         response.should be_success
       end
     end
@@ -145,7 +145,7 @@ module EventTaskx
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :task_category => 'production')
-        get 'update', {:use_route => :event_taskx_event_task, :id => task.id, :event_task => {:name => 'new name'}}
+        get 'update', {:use_route => :event_taskx, :id => task.id, :event_task => {:name => 'new name'}}
         response.should redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
       end
       
@@ -155,7 +155,7 @@ module EventTaskx
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :task_category => 'production')
-        get 'update', {:use_route => :event_taskx_event_task, :id => task.id, :event_task => {:name => ''}}
+        get 'update', {:use_route => :event_taskx, :id => task.id, :event_task => {:name => ''}}
         response.should render_template('edit')
       end
     end
@@ -167,7 +167,7 @@ module EventTaskx
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :task_category => 'production', :executioner_id => @u.id)
-        get 'show', {:use_route => task.id, :id => task.id}
+        get 'show', {:use_route => :event_taskx, :id => task.id}
         response.should be_success
       end
     end

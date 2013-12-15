@@ -17,6 +17,8 @@ module EventTaskx
     def new
       @title = t('New Event Task')
       @event_task = EventTaskx::EventTask.new()
+      @resource_id = params[:resource_id]
+      @resource_string = params[:resource_string].strip
       @task_category = params[:task_category].strip if params[:task_category].present?
       @erb_code = find_config_const('event_task_new_view', 'event_taskx_event_tasks')
     end

@@ -25,6 +25,7 @@ class CreateEventTaskxEventTasks < ActiveRecord::Migration
     add_index :event_taskx_event_tasks, :resource_id
     add_index :event_taskx_event_tasks, :resource_string
     add_index :event_taskx_event_tasks, :task_category
+    add_index :event_taskx_event_tasks, :wfid
     add_index :event_taskx_event_tasks, [:resource_id, :resource_string]
   end
 end

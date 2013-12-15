@@ -1,3 +1,7 @@
+ <% if @view_in_config && @erb_code %>
+  <%= render inline: ERB.new(@erb_code).result(binding) %>
+  
+  <% else %>
 <div class="pagination"><%= will_paginate models %></div>
     <table class="table table-striped">
 		<tr>
@@ -27,7 +31,7 @@
 			<td><%= prt(r, 'executioner.name') if r.executioner_id.present? %></td> 
 			<td><%= prt(r, 'requested_by.name') %></td> 
 			<td><%= prt(r, 'last_updated_by.name') %></td>    
-			<td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{edit_event_task_path(r, :parent_record_id => r.resource_id, :parent_resource => r.resource_string)}", :class => BUTTONS_CLS['action']  if has_action_right?('update', 'event_taskx_event_tasks', r) %></td>
+			<td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{edit_event_task_path(r, :parent_record_id => r.resource_id, :parent_resource => r.resource_string)}", :class => BUTTONS_CLS['action']  if has_action_right?('update', params[:controller], r) %></td>
 		  </tr>
 		<% end %>
 	</table>
@@ -40,4 +44,6 @@
 	    </th>
 	  </tr>
 	</table>
+	
+	<% end %>
 	

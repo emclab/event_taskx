@@ -1,3 +1,7 @@
+<% if @view_in_config && @erb_code %>
+  <%= render inline: ERB.new(@erb_code).result(binding) %>
+  
+  <% else %>
 <%= simple_form_for @event_task do |f| %>    
 	  <%= f.input :name, :label => t('Task Name') %>  
 	  <%= f.input :description, :label => t('Description'), :input_html => {:rows => 4} %>
@@ -8,7 +12,12 @@
 	  <%= f.input :executioner_id, :label => t('Executioner'), :collection => Authentify::User.where(:status => 'active'), :include_blank => true %>
 	  <%= f.input :expedite, :label => t('Expedite'), :as => :boolean %>
 	  <%= f.input :task_category, :as => :hidden, :input_html => {:value => @task_category} if @task_category.present? %>
+	  <%= f.input :resource_id, :as => :hidden, :input_html => {:value => @resource_id} %>
+	  <%= f.input :resource_string, :as => :hidden, :input_html => {:value => @resource_string} %>
 	  
+	  <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
 	  <%= f.button :submit, t('Save'), :class =>'btn btn-primary' %>  
-<% end %>  
+<% end %>
+  
+<% end%>
 

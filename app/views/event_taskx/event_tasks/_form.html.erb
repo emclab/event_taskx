@@ -1,3 +1,7 @@
+<% if @view_in_config && @erb_code %>
+  <%= render inline: ERB.new(@erb_code).result(binding) %>
+  
+  <% else %>
 <%= simple_form_for @event_task do |f| %>    
 	  <%= f.input :name, :label => t('Task Name') %>  
 	  <%= f.input :description, :label => t('Description'), :input_html => {:rows => 4} %>
@@ -25,14 +29,17 @@
       <% if readonly?(@event_task, 'expedite')%>
         <%= f.input :expedite_noupdate, :label => t('Expedite'), :readonly => true, :required => false, :input_html => {:value => @event_task.expedite} %>
       <% else %>
-        <%= f.input :cancelled, :label => t('Expedite'), :collection => [[t('Yes'), true], [t('No'), false]]%>
+        <%= f.input :expedite, :label => t('Expedite'), :collection => [[t('Yes'), true], [t('No'), false]]%>
       <% end %>
       <% if readonly?(@event_task, 'completed')%>
         <%= f.input :completed_noupdate, :label => t('Completed'), :readonly => true, :required => false, :input_html => {:value => @event_task.completed} %>
       <% else %>
-        <%= f.input :cancelled, :label => t('Completed'), :collection => [[t('Yes'), true], [t('No'), false]]%>
+        <%= f.input :completed, :label => t('Completed'), :collection => [[t('Yes'), true], [t('No'), false]]%>
       <% end %>
       <%= f.input :requested_by_noupdate, :label => t('Requested_by'), :readonly => true, :required => false, :input_html => {:value => @event_task.requested_by.name} %>
 	  
+	  <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
 	  <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>  
 <% end %>  
+
+<% end %>
