@@ -30,6 +30,7 @@ module EventTaskx
       if @event_task.save
         redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
       else
+        @task_category = params[:event_task][:task_category].strip if params[:event_task].present? && params[:event_task][:task_category].present?
         flash[:notice] = t('Data Error. Not Saved!')
         render 'new'
       end
