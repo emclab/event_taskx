@@ -11,7 +11,7 @@
 	  <%= f.input :task_status_id, :label => t('Task Status'), :collection => Commonx::MiscDefinition.where(:for_which => 'task_status'), :include_blank => true %>
 	  <%= f.input :executioner_id, :label => t('Executioner'), :collection => Authentify::User.where(:status => 'active'), :include_blank => true %>
 	  <%= f.input :expedite, :label => t('Expedite'), :as => :boolean %>
-	  <%= f.input :task_category, :as => :hidden, :input_html => {:value => @task_category} if @task_category.present? %>
+	  <%= f.input :task_category, :as => :hidden, :input_html => {:value => @task_category} %>
 	  <%= f.input :resource_id, :as => :hidden, :input_html => {:value => @resource_id} %>
 	  <%= f.input :resource_string, :as => :hidden, :input_html => {:value => @resource_string} %>
 	  

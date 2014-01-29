@@ -44,7 +44,7 @@ describe "LinkTests" do
         :sql_code => "")
         
       @task_sta = FactoryGirl.create(:commonx_misc_definition, 'for_which' => 'task_status')  
-      task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :task_category => 'production', :executioner_id => @u.id)
+      task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :resource_string => 'projectx/projects', :task_category => 'production_plan', :executioner_id => @u.id)
         
             
       visit '/'
@@ -56,20 +56,25 @@ describe "LinkTests" do
     
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      visit event_tasks_path
+      visit event_tasks_path(:task_category => 'production_plan')
       #save_and_open_page
-      page.body.should have_content('Tasks')
+      page.body.should have_content('Production Plans')
       click_link('Edit')
       #save_and_open_page
-      visit new_event_task_path(:resource_id => 100, :resource_string => 'projectx/projects')
+      visit new_event_task_path(:resource_id => 100, :resource_string => 'projectx/projects', :task_category => 'production_plan')
       #save_and_open_page
-      task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :task_category => 'production', 
+      task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :task_category => 'production_plan', 
                                  :resource_string => 'projectx/projects', :executioner_id => @u.id)
       visit event_task_path(task1) #, :parent_record_id => task1.resource_id, :parent_resource => task1.resource_string)
       #save_and_open_page
       click_link('New Log')
       #save_and_open_page
       page.body.should have_content('Log')
+      
+      visit event_tasks_path(:resource_id => 100, :resource_string => 'projectx/projects', :task_category => 'production_plan')
+      save_and_open_page
+      click_link('New Production Plan')
+      save_and_open_page
     end
   end
 end

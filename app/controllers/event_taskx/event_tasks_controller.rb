@@ -3,24 +3,22 @@ require_dependency "event_taskx/application_controller"
 module EventTaskx
   class EventTasksController < ApplicationController
     before_filter :require_employee
+    before_filter :load_record
         
     def index
-      @title = t('Event Tasks')
+      @title = t(@task_category.humanize.titleize.pluralize)
       @event_tasks = params[:event_taskx_event_tasks][:model_ar_r]  #returned by check_access_right
       @event_tasks = @event_tasks.where('event_taskx_event_tasks.resource_id = ?', params[:resource_id]) if params[:resource_id].present? 
       @event_tasks = @event_tasks.where('TRIM(event_taskx_event_tasks.resource_string) = ?', params[:resource_string].strip) if params[:resource_string].present?
       @event_tasks = @event_tasks.where('TRIM(event_taskx_event_tasks.task_category) = ?', params[:task_category].strip) if params[:task_category].present?
       @event_tasks = @event_tasks.page(params[:page]).per_page(@max_pagination) 
-      @erb_code = find_config_const('event_task_index_view', 'event_taskx_event_tasks')
+      @erb_code = find_config_const('event_task_index_view', 'event_taskx')
     end
   
     def new
-      @title = t('New Event Task')
+      @title = t('New ' + @task_category.humanize.titleize)
       @event_task = EventTaskx::EventTask.new()
-      @resource_id = params[:resource_id]
-      @resource_string = params[:resource_string].strip
-      @task_category = params[:task_category].strip if params[:task_category].present?
-      @erb_code = find_config_const('event_task_new_view', 'event_taskx_event_tasks')
+      @erb_code = find_config_const('event_task_new_view', 'event_taskx')
     end
   
     def create
@@ -37,9 +35,9 @@ module EventTaskx
     end
   
     def edit
-      @title = t('Update Event Task')
+      @title = t('Update ' + @task_category.humanize.titleize)
       @event_task = EventTaskx::EventTask.find_by_id(params[:id])
-      @erb_code = find_config_const('event_task_edit_view', 'event_taskx_event_tasks')
+      @erb_code = find_config_const('event_task_edit_view', 'event_taskx')
     end
   
     def update
@@ -54,12 +52,21 @@ module EventTaskx
     end
   
     def show
-      @title = t('Show Event Task')
+      @title = t(@task_category.humanize.titleize + ' Info')
       @event_task = EventTaskx::EventTask.find_by_id(params[:id])
-      @erb_code = find_config_const('event_task_show_view', 'event_taskx_event_tasks')
+      @erb_code = find_config_const('event_task_show_view', 'event_taskx')
     end
     
     protected
+    
+    def load_record
+      @task_category = params[:task_category].strip if params[:task_category].present?
+      @resource_id = params[:resource_id] if params[:resource_id].present?
+      @resource_string = params[:resource_string] if params[:resource_string].present?
+      @task_category = EventTaskx::EventTask.find_by_id(params[:id]).task_category.strip if params[:id].present?
+      @resource_id = EventTaskx::EventTask.find_by_id(params[:id]).resource_id if params[:id].present?
+      @resource_string = EventTaskx::EventTask.find_by_id(params[:id]).resource_string if params[:id].present?
+    end
     
   end
 end

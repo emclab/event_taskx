@@ -14,7 +14,7 @@ module EventTaskx
     belongs_to :executioner, :class_name => 'Authentify::User'
     belongs_to :task_status, :class_name => 'Commonx::MiscDefinition' 
     
-    validates_presence_of :resource_id, :resource_string, :name  #, :task_status_id 
+    validates_presence_of :resource_id, :resource_string, :name, :task_category  #, :task_status_id 
     
   end
 end

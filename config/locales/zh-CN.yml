@@ -34,6 +34,10 @@ zh-CN:
   Executioner : '执行人'
   Expedite : '加急'
   Delete  : '删除'
-  
   Save : '保存'
-  'Save' : '保存'
+  New Production Plan : '新生产计划'
+  New Installation Plan : '新安装计划'
+  Production Plan Info : '生产计划内容'
+  Installation Plan Info : '安装计划内容'
+  Production Plans : '生产计划一览'
+  Installation Plans : '安装计划一览'

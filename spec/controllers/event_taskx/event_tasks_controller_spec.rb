@@ -29,9 +29,9 @@ module EventTaskx
         :sql_code => "EventTaskx::EventTask.where(:cancelled => false).order('created_at DESC')")
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
-        task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id)
-        task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :name => 'a new task')
-        get 'index', {:use_route => :event_taskx}
+        task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :task_category => 'some_cate')
+        task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :name => 'a new task', :task_category => 'some_cate')
+        get 'index', {:use_route => :event_taskx, :task_category => 'some_cate'}
         assigns[:event_tasks].should =~ [task, task1]
       end
       
@@ -40,9 +40,9 @@ module EventTaskx
         :sql_code => "EventTaskx::EventTask.where(:cancelled => false).order('created_at DESC')")
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
-        task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_string => 'projectx/projects')
-        task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :name => 'a new task')
-        get 'index', {:use_route => :event_taskx, :resource_string => 'projectx/projects'}
+        task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_string => 'projectx/projects', :task_category => 'some_cate')
+        task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :name => 'a new task', :task_category => 'some_cate')
+        get 'index', {:use_route => :event_taskx, :resource_string => 'projectx/projects', :task_category => 'some_cate'}
         assigns[:event_tasks].should =~ [task]
       end
       
@@ -51,9 +51,9 @@ module EventTaskx
         :sql_code => "EventTaskx::EventTask.where(:cancelled => false).order('created_at DESC')")
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
-        task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100)
-        task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :name => 'a new task')
-        get 'index', {:use_route => :event_taskx, :resource_id => 100}
+        task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :task_category => 'some_cate')
+        task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :name => 'a new task', :task_category => 'some_cate')
+        get 'index', {:use_route => :event_taskx, :resource_id => 100, :task_category => 'some_cate'}
         assigns[:event_tasks].should =~ [task]
       end
       
@@ -63,8 +63,8 @@ module EventTaskx
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100)
-        task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :resource_string => 'projectx/projects',  :name => 'a new task')
-        get 'index', {:use_route => :event_taskx, :resource_id => 100, :resource_string => ' projectx/projects'}
+        task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :task_category => 'some_cate', :resource_string => 'projectx/projects', :name => 'a new task')
+        get 'index', {:use_route => :event_taskx, :resource_id => 100, :resource_string => ' projectx/projects', :task_category => 'some_cate'}
         assigns[:event_tasks].should =~ [task1]
       end
       
@@ -98,7 +98,7 @@ module EventTaskx
         :sql_code => "")
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
-        get 'new', {:use_route => :event_taskx, :resource_id => 100, :resource_string => 'event_taskx/event_tasks'}
+        get 'new', {:use_route => :event_taskx, :resource_id => 100, :resource_string => 'event_taskx/event_tasks', :task_category => 'some_cate'}
         response.should be_success
          
       end

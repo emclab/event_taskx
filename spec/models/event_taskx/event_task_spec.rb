@@ -12,6 +12,11 @@ module EventTaskx
       c.should_not be_valid
     end
     
+    it "should reject nil task_category" do
+      c = FactoryGirl.build(:event_taskx_event_task, :task_category => nil)
+      c.should_not be_valid
+    end
+    
     it "should reject nil resource_id" do
       c = FactoryGirl.build(:event_taskx_event_task, :resource_id => nil)
       c.should_not be_valid
