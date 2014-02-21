@@ -17,12 +17,10 @@
   <b><%= t('Instruction') %></b>
   <%= @event_task.instruction %>
 </p>
-<% if @event_task.task_category.present? %>
-  <p>
+<p>
     <b><%= t('Task Category')  %></b>
     <%= @event_task.task_category %>
-  </p>
-<% end %>
+</p>
 <p>
   <b><%= t('Task Status') %></b>
   <%= @event_task.task_status.name if @event_task.task_status_id.present? %>
@@ -70,8 +68,8 @@
 	    <th>
   			<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :id => 'close', :class => BUTTONS_CLS['action'] %>
   			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<%= link_to t('New Log'), SUBURI + commonx.new_log_path(:resource_id => @event_task.id, :resource_name => params[:controller], :subaction => 'event_task', :format => :js), :remote => true, 
-                          :id => 'new_log_link', :class => BUTTONS_CLS['action'] if has_action_right?('create_event_task', 'commonx/logs') %>
+			<%= link_to t('New Log'), SUBURI + commonx.new_log_path(:resource_id => @event_task.id, :resource_name => params[:controller], :subaction => @task_category, :format => :js), :remote => true, 
+                          :id => 'new_log_link', :class => BUTTONS_CLS['action'] if has_action_right?('create_' + @task_category, 'commonx/logs') %>
          </th>
 	  </tr>
 	</table>    	

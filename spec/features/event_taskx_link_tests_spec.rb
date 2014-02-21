@@ -40,7 +40,7 @@ describe "LinkTests" do
            :sql_code => "")
       user_access = FactoryGirl.create(:user_access, :action => 'show', :resource =>'event_taskx_event_tasks', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "record.executioner_id == session[:user_id]")
-      user_access = FactoryGirl.create(:user_access, :action => 'create_event_task', :resource => 'commonx_logs', :role_definition_id => @role.id, :rank => 1,
+      user_access = FactoryGirl.create(:user_access, :action => 'create_production_plan', :resource => 'commonx_logs', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
         
       @task_sta = FactoryGirl.create(:commonx_misc_definition, 'for_which' => 'task_status')  
