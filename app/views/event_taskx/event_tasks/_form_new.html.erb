@@ -1,11 +1,11 @@
-<% if @view_in_config && @erb_code %>
-  <%= render inline: ERB.new(@erb_code).result(binding) %>
+<% if @view_in_config && @erb_code  %>
+  <%= render inline: @erb_code %>
   
   <% else %>
 <%= simple_form_for @event_task do |f| %>    
 	  <%= f.input :name, :label => t('Task Name') %>  
 	  <%= f.input :description, :label => t('Description'), :input_html => {:rows => 4} %>
-	  <%= f.input :instruction, :label => t('Instructions'), :input_html => {:rows => 4} %>
+	  <%= f.input :instruction, :label => t('Instruction'), :input_html => {:rows => 4} %>
 	  <%= f.input :start_datetime, :label => t('Start Datetime'), :as => :string %>
       <%= f.input :finish_datetime, :label => t('Finish Datetime'), :as => :string %>
 	  <%= f.input :task_status_id, :label => t('Task Status'), :collection => Commonx::MiscDefinition.where(:for_which => 'task_status'), :include_blank => true %>
