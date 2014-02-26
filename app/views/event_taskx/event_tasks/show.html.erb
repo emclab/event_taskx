@@ -18,10 +18,6 @@
   <%= @event_task.instruction %>
 </p>
 <p>
-    <b><%= t('Task Category')  %></b>
-    <%= @event_task.task_category %>
-</p>
-<p>
   <b><%= t('Task Status') %></b>
   <%= @event_task.task_status.name if @event_task.task_status_id.present? %>
 </p>

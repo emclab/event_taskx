@@ -21,7 +21,7 @@
 		</tr>
 		<% models.each do |r| %>
 		  <tr>
-		  	<td><%= r.name %></td>
+		  	<td><%= link_to r.name, SUBURI + "/authentify/view_handler?index=1&url=#{event_task_path(r)}" %></td>
 			<td><%= prt(r, :description) %></td>
 			<td><%= prt(r, 'task_status.name') if r.task_status_id.present? %></td>
 			<td><%= prt(r, :instruction) %></td>
@@ -41,9 +41,9 @@
 	<table class="table table-striped">
 	  <tr>
 	    <th>
+	    	<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action']  %>
 	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    	<%= link_to t('New ' + @task_category.humanize.titleize), SUBURI + "/authentify/view_handler?index=1&url=#{CGI.escape new_event_task_path(:resource_id => @resource_id, :resource_string => @resource_string, :task_category => @task_category)}", :class => BUTTONS_CLS['action']  if @task_category.present? && @resource_id.present? && @resource_string.present? && has_action_right?('create', params[:controller]) %>
-	    	<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action']  %>
 	    </th>
 	  </tr>
 	</table>

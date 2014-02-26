@@ -11,6 +11,7 @@ zh-CN:
   Edit Task Info: '更新任务'
   Show Event Task : '任务内容'
   Task Info : '任务内容'
+  Task Name : '任务名称'
   Successfully Saved! : '已保存！'
   Successfully Updated! : '已更新！'
   Data Error. Not Saved! : '数据错误。 无法保存！'
@@ -45,3 +46,4 @@ zh-CN:
   Description : '简介'
   Instructions : '要求'
   Instruction : '要求'
+  Quote Task Info : '报价任务一览'
