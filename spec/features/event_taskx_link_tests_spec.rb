@@ -32,13 +32,13 @@ describe "LinkTests" do
       ul = FactoryGirl.build(:user_level, :sys_user_group_id => ug.id)
       @u = FactoryGirl.create(:user, :user_levels => [ul], :user_roles => [ur], :login => 'thistest', :password => 'password', :password_confirmation => 'password')
       
-      ua1 = FactoryGirl.create(:user_access, :action => 'index', :resource => 'event_taskx_event_tasks', :role_definition_id => @role.id, :rank => 1,
+      ua1 = FactoryGirl.create(:user_access, :action => 'index_production_plan', :resource => 'event_taskx_event_tasks', :role_definition_id => @role.id, :rank => 1,
            :sql_code => "EventTaskx::EventTask.where(:cancelled => false).order('created_at DESC')")
-      ua1 = FactoryGirl.create(:user_access, :action => 'create', :resource => 'event_taskx_event_tasks', :role_definition_id => @role.id, :rank => 1,
+      ua1 = FactoryGirl.create(:user_access, :action => 'create_production_plan', :resource => 'event_taskx_event_tasks', :role_definition_id => @role.id, :rank => 1,
            :sql_code => "")
-      ua1 = FactoryGirl.create(:user_access, :action => 'update', :resource => 'event_taskx_event_tasks', :role_definition_id => @role.id, :rank => 1,
+      ua1 = FactoryGirl.create(:user_access, :action => 'update_production_plan', :resource => 'event_taskx_event_tasks', :role_definition_id => @role.id, :rank => 1,
            :sql_code => "")
-      user_access = FactoryGirl.create(:user_access, :action => 'show', :resource =>'event_taskx_event_tasks', :role_definition_id => @role.id, :rank => 1,
+      user_access = FactoryGirl.create(:user_access, :action => 'show_production_plan', :resource =>'event_taskx_event_tasks', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "record.executioner_id == session[:user_id]")
       user_access = FactoryGirl.create(:user_access, :action => 'create_production_plan', :resource => 'commonx_logs', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
@@ -56,24 +56,44 @@ describe "LinkTests" do
     
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      visit event_tasks_path(:task_category => 'production_plan')
-      #save_and_open_page
+      visit event_tasks_path(:task_category => 'production_plan', :subaction => 'production_plan')
+      save_and_open_page
       page.body.should have_content('Production Plans')
       click_link('Edit')
-      #save_and_open_page
-      visit new_event_task_path(:resource_id => 100, :resource_string => 'projectx/projects', :task_category => 'production_plan')
-      #save_and_open_page
+      save_and_open_page
+      fill_in 'event_task_name' , :with => 'this is a new task'
+      click_button 'Save'
+      save_and_open_page
+      #wrong data
+      visit event_tasks_path(:task_category => 'production_plan', :subaction => 'production_plan')
+      page.body.should have_content('Production Plans')
+      click_link('Edit')
+      fill_in :event_task_name , :with => ''
+      click_button "Save"
+      save_and_open_page
+      
+      visit new_event_task_path(:resource_id => 100, :resource_string => 'projectx/projects', :task_category => 'production_plan', :subaction => 'production_plan')
+      save_and_open_page
       task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :task_category => 'production_plan', 
                                  :resource_string => 'projectx/projects', :executioner_id => @u.id)
-      visit event_task_path(task1) #, :parent_record_id => task1.resource_id, :parent_resource => task1.resource_string)
-      #save_and_open_page
+      visit event_task_path(task1, :subaction => 'production_plan') #, :parent_record_id => task1.resource_id, :parent_resource => task1.resource_string)
+      save_and_open_page
       click_link('New Log')
-      #save_and_open_page
+      save_and_open_page
       page.body.should have_content('Log')
       
-      visit event_tasks_path(:resource_id => 100, :resource_string => 'projectx/projects', :task_category => 'production_plan')
-      save_and_open_page
+      visit event_tasks_path(:resource_id => 100, :resource_string => 'projectx/projects', :task_category => 'production_plan', :subaction => 'production_plan')
+      #save_and_open_page
       click_link('New Production Plan')
+      save_and_open_page
+      fill_in :event_task_name, :with => 'a new name'
+      click_button 'Save'
+      save_and_open_page
+      #wrong data
+      visit event_tasks_path(:resource_id => 100, :resource_string => 'projectx/projects', :task_category => 'production_plan', :subaction => 'production_plan')
+      click_link('New Production Plan')
+      fill_in :event_task_name, :with => ''
+      click_button 'Save'
       save_and_open_page
     end
   end

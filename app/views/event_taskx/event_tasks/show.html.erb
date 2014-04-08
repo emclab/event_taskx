@@ -43,11 +43,11 @@
 </p>
 <p>
   <b><%= t('Executioner') %></b>
-  <%= @event_task.executioner.name %>
+  <%= @event_task.executioner.name if @event_task.executioner_id.present? %>
 </p>
 <p>
   <b><%= t('Requested By') %></b>
-  <%= @event_task.requested_by.name %>
+  <%= @event_task.requested_by.name if @event_task.requested_by_id.present? %>
 </p>
 <p>
   <b><%= t('Last Updated By') %></b>

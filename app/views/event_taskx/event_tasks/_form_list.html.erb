@@ -27,13 +27,13 @@
 			<td><%= prt(r, :instruction) %></td>
 			<td><%= r.start_datetime.strftime("%Y/%m/%d") %></td>
 			<td><%= r.finish_datetime.strftime("%Y/%m/%d") %></td>
-			<td><%= t(prt(r, :expedite).to_s) %></td>
-			<td><%= t(prt(r, :cancelled).to_s) %></td>
-			<td><%= t(prt(r, :completed).to_s) %></td>
+			<td><%= r.expedite ? t('Yes') : t('No') %></td>
+			<td><%= r.cancelled ? t('Yes') : t('No') %></td>
+			<td><%= r.completed ? t('Yes') : t('No') %></td>
 			<td><%= prt(r, 'executioner.name') if r.executioner_id.present? %></td> 
 			<td><%= prt(r, 'requested_by.name') %></td> 
 			<td><%= prt(r, 'last_updated_by.name') %></td>    
-			<td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{edit_event_task_path(r, :parent_record_id => r.resource_id, :parent_resource => r.resource_string)}", :class => BUTTONS_CLS['action']  if has_action_right?('update', params[:controller], r) %></td>
+			<td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{CGI::escape edit_event_task_path(r, :subaction => @task_category)}", :class => BUTTONS_CLS['action']  if has_action_right?('update_'+@task_category, params[:controller], r) %></td>
 		  </tr>
 		<% end %>
 	</table>
@@ -43,7 +43,7 @@
 	    <th>
 	    	<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action']  %>
 	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	    	<%= link_to t('New ' + @task_category.humanize.titleize), SUBURI + "/authentify/view_handler?index=1&url=#{CGI.escape new_event_task_path(:resource_id => @resource_id, :resource_string => @resource_string, :task_category => @task_category)}", :class => BUTTONS_CLS['action']  if @task_category.present? && @resource_id.present? && @resource_string.present? && has_action_right?('create', params[:controller]) %>
+	    	<%= link_to t('New ' + @task_category.humanize.titleize), SUBURI + "/authentify/view_handler?index=1&url=#{CGI.escape new_event_task_path(:resource_id => @resource_id, :resource_string => @resource_string, :task_category => @task_category, :subaction => @task_category)}", :class => BUTTONS_CLS['action']  if @task_category.present? && @resource_id.present? && @resource_string.present? && has_action_right?('create_' + @task_category, params[:controller]) %>
 	    </th>
 	  </tr>
 	</table>
