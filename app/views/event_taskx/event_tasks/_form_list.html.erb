@@ -25,8 +25,8 @@
 			<td><%= prt(r, :description) %></td>
 			<td><%= prt(r, 'task_status.name') if r.task_status_id.present? %></td>
 			<td><%= prt(r, :instruction) %></td>
-			<td><%= r.start_datetime.strftime("%Y/%m/%d") %></td>
-			<td><%= r.finish_datetime.strftime("%Y/%m/%d") %></td>
+			<td><%= r.start_datetime.strftime("%Y/%m/%d") if r.start_datetime.present? %></td>
+			<td><%= r.finish_datetime.strftime("%Y/%m/%d") if r.finish_datetime.present? %></td>
 			<td><%= r.expedite ? t('Yes') : t('No') %></td>
 			<td><%= r.cancelled ? t('Yes') : t('No') %></td>
 			<td><%= r.completed ? t('Yes') : t('No') %></td>
