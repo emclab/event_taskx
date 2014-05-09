@@ -29,6 +29,7 @@ module EventTaskx
         redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
       else
         @task_category = params[:event_task][:task_category].strip if params[:event_task].present? && params[:event_task][:task_category].present?
+        @erb_code = find_config_const('event_task_new_view', 'event_taskx')
         flash[:notice] = t('Data Error. Not Saved!')
         render 'new'
       end
@@ -46,6 +47,7 @@ module EventTaskx
       if @event_task.update_attributes(params[:event_task], :as => :role_update)
         redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
       else
+        @erb_code = find_config_const('event_task_edit_view', 'event_taskx')
         flash[:notice] = t('Data Error. Not Updated!')
         render 'edit'
       end
