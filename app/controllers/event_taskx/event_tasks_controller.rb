@@ -2,8 +2,8 @@ require_dependency "event_taskx/application_controller"
 
 module EventTaskx
   class EventTasksController < ApplicationController
-    before_filter :require_employee
-    before_filter :load_record
+    before_action :require_employee
+    before_action :load_record
         
     def index
       @title = t(@task_category.humanize.titleize.pluralize)

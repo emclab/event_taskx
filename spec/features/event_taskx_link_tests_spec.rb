@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "LinkTests" do
+RSpec.describe "LinkTests" , type: :request do
   describe "GET /event_taskx_link_tests" do
     mini_btn = 'btn btn-mini '
     ActionView::CompiledTemplates::BUTTONS_CLS =
@@ -56,33 +56,33 @@ describe "LinkTests" do
     
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      visit event_tasks_path(:task_category => 'production_plan', :subaction => 'production_plan')
+      visit event_taskx.event_tasks_path(:task_category => 'production_plan', :subaction => 'production_plan')
       save_and_open_page
-      page.body.should have_content('Production Plans')
+      expect(page).to have_content('Production Plans')
       click_link('Edit')
       save_and_open_page
       fill_in 'event_task_name' , :with => 'this is a new task'
       click_button 'Save'
       save_and_open_page
       #wrong data
-      visit event_tasks_path(:task_category => 'production_plan', :subaction => 'production_plan')
-      page.body.should have_content('Production Plans')
+      visit event_taskx.event_tasks_path(:task_category => 'production_plan', :subaction => 'production_plan')
+      expect(page).to have_content('Production Plans')
       click_link('Edit')
       fill_in :event_task_name , :with => ''
       click_button "Save"
       save_and_open_page
       
-      visit new_event_task_path(:resource_id => 100, :resource_string => 'projectx/projects', :task_category => 'production_plan', :subaction => 'production_plan')
+      visit event_taskx.new_event_task_path(:resource_id => 100, :resource_string => 'projectx/projects', :task_category => 'production_plan', :subaction => 'production_plan')
       save_and_open_page
       task1 = FactoryGirl.create(:event_taskx_event_task, :task_status_id => @task_sta.id, :resource_id => 100, :task_category => 'production_plan', 
                                  :resource_string => 'projectx/projects', :executioner_id => @u.id)
-      visit event_task_path(task1, :subaction => 'production_plan') #, :parent_record_id => task1.resource_id, :parent_resource => task1.resource_string)
+      visit event_taskx.event_task_path(task1, :subaction => 'production_plan') #, :parent_record_id => task1.resource_id, :parent_resource => task1.resource_string)
       save_and_open_page
       click_link('New Log')
       save_and_open_page
-      page.body.should have_content('Log')
+      expect(page).to have_content('Log')
       
-      visit event_tasks_path(:resource_id => 100, :resource_string => 'projectx/projects', :task_category => 'production_plan', :subaction => 'production_plan')
+      visit event_taskx.event_tasks_path(:resource_id => 100, :resource_string => 'projectx/projects', :task_category => 'production_plan', :subaction => 'production_plan')
       #save_and_open_page
       click_link('New Production Plan')
       save_and_open_page
@@ -90,7 +90,7 @@ describe "LinkTests" do
       click_button 'Save'
       save_and_open_page
       #wrong data
-      visit event_tasks_path(:resource_id => 100, :resource_string => 'projectx/projects', :task_category => 'production_plan', :subaction => 'production_plan')
+      visit event_taskx.event_tasks_path(:resource_id => 100, :resource_string => 'projectx/projects', :task_category => 'production_plan', :subaction => 'production_plan')
       click_link('New Production Plan')
       fill_in :event_task_name, :with => ''
       click_button 'Save'
