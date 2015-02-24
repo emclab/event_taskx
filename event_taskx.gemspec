@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", ">=4.2.0"
-  s.add_dependency "jquery-rails", '<3.0'
+  s.add_dependency "jquery-rails" #, '<3.0'
   s.add_dependency "simple_form"
   s.add_dependency "will_paginate"
   s.add_dependency "database_cleaner"
