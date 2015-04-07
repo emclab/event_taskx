@@ -1,3 +1,3 @@
 module EventTaskx
-  VERSION = "3.2.12.06"
+  VERSION = "01"
 end
