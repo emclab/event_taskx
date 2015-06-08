@@ -2,6 +2,7 @@
   <%= render inline: @erb_code %>
   
   <% else %>
+  <h4><%=@title %></h>
 <%= simple_form_for @event_task do |f| %>    
 	  <%= f.input :name, :label => t('Task Name') %>  
 	  <%= f.input :description, :label => t('Description'), :input_html => {:rows => 4} %>
